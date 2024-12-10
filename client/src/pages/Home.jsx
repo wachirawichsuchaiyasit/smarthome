@@ -1,10 +1,12 @@
-import { Card, Image, Button } from "@nextui-org/react";
+import { Card, Image } from "@nextui-org/react";
+import MiddleWare from "../components/Middleware";
 import MobileSibar from "../components/MobileSibar";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function HomePage() {
     return (
         <>
+
+            <MiddleWare />
             <MobileSibar />
             <div className="flex flex-col gap-4 p-4 md:container md:mx-auto">
                 <h1 className="text-2xl font-bold ">Home</h1>

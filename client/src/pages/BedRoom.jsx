@@ -1,16 +1,43 @@
-import { Icon } from "@iconify/react/dist/iconify.js"
-import { Input, Switch, Card, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Device from "../components/Device";
+import MiddleWare from "../components/Middleware";
 
-export default function Bedroom() {
+
+export default function Outdoor() {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const [Loading, SetLoading] = useState(true)
+    const [Devices, setDevices] = useState([])
 
     const handleOpen = () => {
         onOpen()
     }
 
+    const getDevice = async () => {
+        const response = await axios.post("http://localhost:3000/api/getdevice", {
+            room: "bedroom"
+        })
+
+
+
+        setDevices(response.data.data)
+        SetLoading(false)
+
+    }
+
+    useEffect(() => {
+        getDevice()
+    }, [])
+
+
     return (
         <>
-            <div className="p-2 mt-4 flex flex-col gap-4  md:container md:mx-auto">
+            <MiddleWare />
+            <div className="p-2 mt-4 md:container md:mx-auto">
+
 
                 <div className="flex justify-between items-center">
                     <a href={"/"} className="flex  items-center">
@@ -22,50 +49,50 @@ export default function Bedroom() {
                     </Button>
                 </div>
 
-                <div className="flex flex-col mt-8 gap-4 md:flex-row">
+                {Loading ?
+                    <>
+                        <p className="p-4">Loading ...</p>
 
-                    <div className="rounded-3xl bg-[#F4F4F4] w-full flex  p-6  justify-between md:w-fit md:gap-6 md:flex-col-reverse">
-                        <div className="flex flex-col justify-between gap-5">
-                            <h2 className="font-bold text-xl">Lamp</h2>
-                            <Switch defaultSelected  />
+                    </> :
+                    <>
+                        <div className="flex flex-col mt-4 gap-4 md:flex-row">
+
+                            {
+                                Devices.map((v, key) => {
+                                    if (v.enable) { // ตรวจสอบ v.enable แทน v.open
+                                        return (
+                                            <React.Fragment key={key}>
+                                                <Device id={v.id} name={v.name} path={v.image} stats={v.open} />
+                                            </React.Fragment>
+                                        );
+                                    }
+                                    return null; // ถ้าไม่ตรงเงื่อนไข v.enable ให้ไม่แสดงอะไรเลย
+                                })
+                            }
+
                         </div>
-                        <Card className="border-none shadow-none ">
-                            <Image
-                                src="/img/imghome/lamp.png"
-                                width={164}
-                                height={87}
-                            />
-                        </Card>
-                    </div>
-                    
-                    <div className="rounded-3xl bg-[#F4F4F4] w-full flex  p-6  justify-between md:w-fit md:gap-6 md:flex-col-reverse">
-                        <div className="flex flex-col justify-between gap-5">
-                            <h2 className="font-bold text-xl">Fan</h2>
-                            <Switch defaultSelected  />
-                        </div>
-                        <Card className="border-none shadow-none ">
-                            <Image
-                                src="/img/imghome/fan.png"
-                                width={164}
-                                height={87}
-                            />
-                        </Card>
-                    </div>
-
-                </div>
-
-
-
+                        <FormData isOpen={isOpen} onClose={onClose} />
+                    </>}
             </div>
-
-
-            <FormData isOpen={isOpen} onClose={onClose} />
         </>
     )
 }
 
 
 const FormData = ({ isOpen, onClose }) => {
+
+    const [DeviceName, SetDeviceName] = useState("")
+
+    const handleOnClick = async (e) => {
+
+        e.preventDefault()
+
+
+        await axios.post("http://localhost:3000/api/enable", {
+            name: DeviceName,
+        })
+
+    }
 
     return (
         <>
@@ -84,7 +111,7 @@ const FormData = ({ isOpen, onClose }) => {
                                     label="Name"
                                     placeholder="Devices name"
                                     labelPlacement="outside"
-
+                                    onChange={(e) => SetDeviceName(e.target.value)}
                                 />
                                 <Input
                                     type="file"
@@ -98,7 +125,7 @@ const FormData = ({ isOpen, onClose }) => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button onClick={handleOnClick} color="primary" onPress={onClose}>
                                     Create
                                 </Button>
                             </ModalFooter>
