@@ -1,0 +1,42 @@
+import { Card, Image, Button } from "@nextui-org/react";
+import MobileSibar from "../components/MobileSibar";
+import { Icon } from "@iconify/react/dist/iconify.js";
+
+export default function HomePage() {
+    return (
+        <>
+            <MobileSibar />
+            <div className="flex flex-col gap-4 p-4 md:container md:mx-auto">
+                <h1 className="text-2xl font-bold ">Home</h1>
+                {/* Outdoor */}
+                <div className="flex flex-col gap-4 md:flex-row ">
+                    <a href="/Outdoor">
+                        <Card>
+
+                            <Image src="img/img1/outdoor_ds.png"
+                                className="z-0 "
+                            />
+                            <p className="absolute text-white top-1/2 -translate-y-1/2 text-center w-full text-2xl font-bold md:text-6xl">Out Door</p>
+                        </Card>
+                    </a>
+
+                    {/* bed */}
+                    <a href="/BedRoom">
+                        <Card>
+                            <Image src="img/img1/bedroom_ds.png"
+                                className="z-0"
+                            />
+                            <p className="absolute text-white top-1/2 -translate-y-1/2 text-center w-full text-2xl font-bold md:text-6xl">Bed Room</p>
+                        </Card>
+                    </a>
+                </div>
+
+
+
+
+
+            </div>
+
+        </>
+    )
+}
