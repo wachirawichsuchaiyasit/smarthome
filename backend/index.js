@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import cors from 'cors';
 import express from 'express';
 
-const supabaseUrl = 'https://tblbbfisfxqldcrtivsj.supabase.co'
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRibGJiZmlzZnhxbGRjcnRpdnNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM4MjA1MTEsImV4cCI6MjA0OTM5NjUxMX0.yayJofEn2C7zH86prXV2_pmiwuauewcfQdNQkOPNEoE"
+const supabaseUrl = 'https://umqsjrkxyqvgvxfaqehl.supabase.co'
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtcXNqcmt4eXF2Z3Z4ZmFxZWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ5NzE3NDAsImV4cCI6MjA1MDU0Nzc0MH0.A4ey86vEgVM8zx004-5T255oupwxwUWT11PjTyrVZAo"
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
